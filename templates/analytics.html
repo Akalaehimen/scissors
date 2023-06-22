@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}URL Analytics{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1>URL Analytics</h1>
+    {% if analytics %}
+        {% for url_analytics in analytics %}
+        <div class="url-analytics">
+            <h2>Short URL: {{ url_analytics.short_url }}</h2>
+            <p>Clicks: {{ url_analytics.clicks }}</p>
+            {% if url_analytics.analytics %}
+                <h3>Click Details:</h3>
+                <table>
+                    <tr>
+                        <th>User Agent</th>
+                        <th>Referrer</th>
+                        <th>Clicked At</th>
+                        <th>IP Address</th>
+                    </tr>
+                    {% for click_info in url_analytics.analytics %}
+                    <tr>
+                        <td>{{ click_info.user_agent }}</td>
+                        <td>{{ click_info.referrer }}</td>
+                        <td>{{ click_info.clicked_at }}</td>
+                        <td>{{ click_info.ip_address }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <strong>No click data available.</strong>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <strong>No analytics data found.</strong>
+    {% endif %}
+</div>
+{% endblock content %}

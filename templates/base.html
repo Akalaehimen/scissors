@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Shorten URL App</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="#"><h2>App Name</h2></a>
+        </div>
+
+        <nav class="navbar">
+            <ul>
+                <li><a href="{{url_for('Users.index')}}">Home</a></li>
+                <li><a href="{{url_for('Users.register_page')}}">Signup</a></li>
+                <li><a href="{{url_for('Users.login_page')}}">Log in</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="container">
+      <div class="main-wrapper">
+          <div class="area"></div>
+          <div class="main-menu-wrapper">
+              <nav class="main-menu">
+                  <ul>
+                      <li>
+                          <a href="{{url_for('Mains.url_analytics')}}">
+                              <i class="fa fa-home fa-2x"></i>
+                              <span class="nav-text">ANALYTICS</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="{{url_for('Mains.shorten_url')}}">
+                              <i class="fa fa-font fa-2x"></i>
+                              <span class="nav-text">SHORTEN URL</span>
+                          </a>
+                      </li> 
+                      <li class="has-subnav">
+                          <a href="{{url_for('Mains.get_user_history')}}">
+                              <i class="fa fa-list fa-2x"></i>
+                              <span class="nav-text">HISTORY</span>
+                          </a>
+                      </li>
+                      <ul class="logout">
+                          <li>
+                              <a href="{{url_for('Users.logout')}}">
+                                  <i class="fa fa-power-off fa-2x"></i>
+                                  <span class="nav-text">LOGOUT</span>
+                              </a>
+                          </li>  
+                      </ul>
+                  </ul>
+              </nav>
+          </div>
+          {% block content %}
+              <!-- Main content block here -->
+          {% endblock content %}
+      </div>
+  </main>
+          
+          <footer class="footer">
+              <div class="copy">Copyright &copy; 2022 Created By Varlefblog</div>
+              <div class="bottom-links">
+                  <div class="links">
+                      <span>More Info</span>
+                      <a href="{{url_for('Users.index')}}">Home</a>
+                  </div>
+                  <div class="links">
+                      <span>Connect With Us @</span>
+                      <a href="https://www.facebook.com/florence.akala.33"><i class="fa fa-facebook fa-2x"></i></a>
+                      <a href="https://twitter.com/EhimenEmmanuel6?t=Mh0wqRKYBkpMEjDTKyaR0Q&s=03"><i class="fa fa-twitter fa-2x"></i></a>
+                      <a href="https://www.linkedin.com/in/ehimen-akala-004038231"><i class="fa fa-linkedin fa-2x"></i></a>
+                  </div>
+              </div>
+          </footer>
+</body>
+</html>

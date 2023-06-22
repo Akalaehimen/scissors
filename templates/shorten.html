@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Shorten URL{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h1>Create a Short URL</h1>
+    <form class="shorten-form" method="POST" action="{{ url_for('Mains.shorten_url') }}">
+        <!-- Shorten URL form fields -->
+        <input type="text" name="long_url" placeholder="Enter Your Long URL" required>
+        <input type="text" name="domain_name" placeholder="Enter Your Custom Domain Name">
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+        <button type="submit">Shorten URL</button>
+    </form>
+</div>
+{% endblock content %}
+

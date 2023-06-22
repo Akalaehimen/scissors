@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="image-container">
+        <img src="{{ url_for('static', filename='css/dashboard-empty-state.png') }}" alt="Image">
+    </div>
+    <div class="text-container">
+        <h1>Every click tells a story</h1>
+        <h3>See all your link data in one dashboard. View click metrics by location, device, referrers and more.</h3>
+        <div class="registration-link">
+            <h4>Do not have an account? <a href="{{url_for('Users.register_page')}}">Create One</a></h4>
+        </div>
+    </div>
+    {% if error %}
+            <div class="alert alert-danger" role="alert">
+                <h2>{{ error }}</h2>
+            </div>
+    {% endif %}
+</div>
+{% endblock content %}
+
+
+
+

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Shortened URL{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <h1>Shortened URL</h1>
+    {% if shortened_url %}
+      <h3>Your shortened URL, You Can Now Copy And View It In Your Browser:</h3>
+      <h1>{{ shortened_url }}</h1>
+    {% else %}
+      <p>An error occurred while shortening the URL.</p>
+    {% endif %}
+    <h1>QR Code:</h1>
+    <img src="data:image/jpeg;base64,{{ qr_code_image }}" alt="QR Code">
+  </div>
+{% endblock content %}
