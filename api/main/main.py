@@ -30,13 +30,13 @@ blp = Blueprint("Mains", "mains", description="Operations on Mains")
 #             return redirect(url_for('Users.login_page'))  
 #         return f(*args, **kwargs)
 #     return decorated_function
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'user_id' not in session:
-            return redirect(url_for('Users.login_page'))
-        return f(*args, **kwargs)
-    return decorated_function
+# def login_required(f):
+#     @wraps(f)
+#     def decorated_function(*args, **kwargs):
+#         if 'user_id' not in session:
+#             return redirect(url_for('Users.login_page'))
+#         return f(*args, **kwargs)
+#     return decorated_function
 
 
 # Creating a short url and cutomization name and also validating if the url is valid
@@ -104,6 +104,7 @@ def redirect_url(short_url, domain_name):
 
 # Getting the history of the user
 @blp.route("/history", methods=["GET"])
+@login_required
 def get_user_history():
     if not current_user.is_authenticated:
         return redirect(url_for('Users.login_page'))
@@ -120,6 +121,7 @@ def get_user_history():
     return render_template('history.html', history=history)
 
 @blp.route("/analytics", methods=["GET"])
+@login_required
 def url_analytics():
     urls = ShortUrl.query.all()
     analytics = []
