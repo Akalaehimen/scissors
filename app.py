@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, redirect, url_for, flash
 from flask_smorest import Api
 from flask_jwt_extended import JWTManager, get_jwt_identity
 from api.models.user import User
@@ -28,6 +28,7 @@ def create_app(db_url=None, config=config_dict['dev']):
     app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
     app.config["SQLALCHEMY_DATABASE_URI"] = db_url or os.getenv("DATABASE_URL", "sqlite:///scissors.db")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["SECRET_KEY"] = "very_very_discreet"
     db.init_app(app)
 
 
@@ -42,6 +43,14 @@ def create_app(db_url=None, config=config_dict['dev']):
     def user_loader(id):
       return User.query.get(int(id))
 
+    @login_manager.unauthorized_handler
+    def unauthorized_handler():
+        flash('Login to access this page', category='info')
+        return redirect(url_for('Users.login_page'))
+
+    
+    app.config["JWT_SECRET_KEY"] = "veryrandomstuff"
+    jwt = JWTManager(app)
 
    # If the user isn't logged in and tries to access a login required route, this decorator allows the page to
     # redirect page to the homepage

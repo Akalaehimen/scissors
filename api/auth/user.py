@@ -13,6 +13,7 @@ from api.models.user import User
 auth = Blueprint("Users", "users", description="Operations on Users")
 
 @auth.route('/index')
+@auth.route('/')
 def index():
     return render_template('index.html')
  
