@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from utils import db
+from flask import url_for, redirect, flash
 from flask_migrate import Migrate
 from Blocklist import BLOCKLIST
 from api.config.config import config_dict
@@ -17,6 +18,7 @@ from api.auth.user import auth as user_blueprint
 
 def create_app(db_url=None, config=config_dict['dev']):
     app = Flask(__name__)
+    app.secret_key = 'veryr53462626wdomstuff'
     app.config["PROPAGATE_EXCEPTIONS"] = True
     app.config["API_TITLE"] = "Scissors API"
     app.config["API_VERSION"] = "v1"
@@ -40,40 +42,46 @@ def create_app(db_url=None, config=config_dict['dev']):
     def user_loader(id):
       return User.query.get(int(id))
 
-    
-    app.config["JWT_SECRET_KEY"] = "veryrandomstuff"
-    jwt = JWTManager(app)
 
-    @jwt.token_in_blocklist_loader
-    def check_if_token_in_blocklist(jwt_header, jwt_payload):
-        return jwt_payload['jti'] in BLOCKLIST
-    
-    @jwt.expired_token_loader
-    def expired_token_callback(jwt_header, jwt_payload):
-        return (
-            jsonify({
-                "description": "This token has expired",
-                "error": "token_expired"
-            }), 401
-        )
+   # If the user isn't logged in and tries to access a login required route, this decorator allows the page to
+    # redirect page to the homepage
+    @login_manager.unauthorized_handler
+    def unauthorized_handler():
+        flash('Login to access this page', category='info')
+        return redirect(url_for('Mains.get_user_history'))
 
-    @jwt.invalid_token_loader
-    def invalid_token_callback(error):
-        return (
-            jsonify({
-                "description": "Signature verification failed",
-                "error": "invalid_token"
-            }), 401
-        )
     
-    @jwt.unauthorized_loader
-    def missing_token_callback(error):
-        return (
-            jsonify({
-                "desciption": "Request does not contain an access token",
-                "error": "authorization_required"
-            }), 401
-        )
+    # app.config["JWT_SECRET_KEY"] = "veryr53462626wdomstuff"
+    # jwt = JWTManager(app)
+
+    
+    
+    # @jwt.expired_token_loader
+    # def expired_token_callback(jwt_header, jwt_payload):
+    #     return (
+    #         jsonify({
+    #             "description": "This token has expired",
+    #             "error": "token_expired"
+    #         }), 401
+    #     )
+
+    # @jwt.invalid_token_loader
+    # def invalid_token_callback(error):
+    #     return (
+    #         jsonify({
+    #             "description": "Signature verification failed",
+    #             "error": "invalid_token"
+    #         }), 401
+    #     )
+    
+    # @jwt.unauthorized_loader
+    # def missing_token_callback(error):
+    #     return (
+    #         jsonify({
+    #             "desciption": "Request does not contain an access token",
+    #             "error": "authorization_required"
+    #         }), 401
+    #     )
 
     @app.before_first_request
     def create_tables():

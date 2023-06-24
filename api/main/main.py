@@ -30,13 +30,13 @@ blp = Blueprint("Mains", "mains", description="Operations on Mains")
 #             return redirect(url_for('Users.login_page'))  
 #         return f(*args, **kwargs)
 #     return decorated_function
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'user_id' not in session:
-            return redirect(url_for('Users.login_page'))
-        return f(*args, **kwargs)
-    return decorated_function
+# def login_required(f):
+#     @wraps(f)
+#     def decorated_function(*args, **kwargs):
+#         if 'user_id' not in session:
+#             return redirect(url_for('Users.login_page'))
+#         return f(*args, **kwargs)
+#     return decorated_function
 
 
 # Creating a short url and cutomization name and also validating if the url is valid

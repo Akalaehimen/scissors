@@ -2,7 +2,7 @@ from flask.views import MethodView
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 get_jwt, get_jwt_identity, jwt_required)
 from flask_smorest import Blueprint
-from flask_login import logout_user
+from flask_login import logout_user, login_required
 from passlib.hash import pbkdf2_sha256
 from utils import db
 from flask import request, render_template
@@ -18,6 +18,7 @@ def index():
  
 
 @auth.route('/register', methods=['GET', 'POST'])
+# @login_required
 def register_page():
     if request.method == 'POST': 
         username = request.form.get("username")
