@@ -19,7 +19,6 @@ def index():
  
 
 @auth.route('/register', methods=['GET', 'POST'])
-# @login_required
 def register_page():
     if request.method == 'POST': 
         username = request.form.get("username")
@@ -62,7 +61,7 @@ def login_page():
         if pbkdf2_sha256.verify(password, existing_email.password):
             return render_template('login.html', error='Check Your Email and password and try again')
 
-    return render_template('shorten.html')
+    return render_template('index.html')
     
 
 
@@ -88,14 +87,3 @@ def logout():
 
 
 
-# # Delete a user 
-# @auth.route('/users')
-# def delete(username):
-#     user = User.query.filter_by(username=username).first()
-#     if not user:
-#         return render_template('login.html', error='You need to be logged in')
-
-#     db.session.delete(user)
-#     db.session.commit()
-
-#     return render_template('register.html')

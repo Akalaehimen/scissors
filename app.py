@@ -46,7 +46,7 @@ def create_app(db_url=None, config=config_dict['dev']):
     @login_manager.unauthorized_handler
     def unauthorized_handler():
         flash('Login to access this page', category='info')
-        return redirect(url_for('Users.login_page'))
+        return redirect(url_for('Users.index'))
 
     
     app.config["JWT_SECRET_KEY"] = "veryrandomstuff"
@@ -54,10 +54,10 @@ def create_app(db_url=None, config=config_dict['dev']):
 
    # If the user isn't logged in and tries to access a login required route, this decorator allows the page to
     # redirect page to the homepage
-    @login_manager.unauthorized_handler
-    def unauthorized_handler():
-        flash('Login to access this page', category='info')
-        return redirect(url_for('Mains.get_user_history'))
+    # @login_manager.unauthorized_handler
+    # def unauthorized_handler():
+    #     flash('Login to access this page', category='info')
+    #     return redirect(url_for('Mains.get_user_history'))
 
     
     # app.config["JWT_SECRET_KEY"] = "veryr53462626wdomstuff"

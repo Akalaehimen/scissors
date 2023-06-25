@@ -22,26 +22,10 @@ from api.models.click import Click
 blp = Blueprint("Mains", "mains", description="Operations on Mains")
 
 
-# Decorator function to check if the user is authenticated
-# def login_required(f):
-#     @wraps(f)
-#     def decorated_function(*args, **kwargs):
-#         if not current_user.is_authenticated: 
-#             return redirect(url_for('Users.login_page'))  
-#         return f(*args, **kwargs)
-#     return decorated_function
-# def login_required(f):
-#     @wraps(f)
-#     def decorated_function(*args, **kwargs):
-#         if 'user_id' not in session:
-#             return redirect(url_for('Users.login_page'))
-#         return f(*args, **kwargs)
-#     return decorated_function
 
 
 # Creating a short url and cutomization name and also validating if the url is valid
 @blp.route('/shorten', methods=['POST', 'GET'])
-@login_required
 def shorten_url():
     if request.method == 'POST':
         long_url = request.form.get("long_url")
@@ -104,10 +88,9 @@ def redirect_url(short_url, domain_name):
 
 # Getting the history of the user
 @blp.route("/history", methods=["GET"])
-@login_required
+# @login_required
 def get_user_history():
-    if not current_user.is_authenticated:
-        return redirect(url_for('Users.login_page'))
+    
     
     urls = ShortUrl.query.filter_by().all()
     if not urls:
@@ -121,7 +104,6 @@ def get_user_history():
     return render_template('history.html', history=history)
 
 @blp.route("/analytics", methods=["GET"])
-@login_required
 def url_analytics():
     urls = ShortUrl.query.all()
     analytics = []
